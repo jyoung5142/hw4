@@ -7,12 +7,33 @@
 using namespace std;
 
 
-// You may add any prototypes of helper functions here
+int equalPathsHeight(Node* root)
+{
+    if(root == NULL) return 0;
+
+    if(root->left == NULL && root->right == NULL) {
+        return 1;
+    }
+
+    int leftHeight = equalPathsHeight(root->left);
+    int rightHeight = equalPathsHeight(root->right);
+
+    if(leftHeight == -1 || rightHeight == -1) {
+        return -1;
+    }
+
+    if(root->left != NULL &&
+       root->right != NULL &&
+       leftHeight != rightHeight)
+    {
+        return -1;
+    }
+
+    return 1 + (leftHeight > rightHeight ? leftHeight : rightHeight);
+}
 
 
 bool equalPaths(Node * root)
 {
-    // Add your code below
-
+    return equalPathsHeight(root) != -1;
 }
-
